@@ -100,9 +100,10 @@
                                 </variation>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zdr-bF-zIq">
-                                <rect key="frame" x="40" y="181" width="520" height="350"/>
-                                <color key="backgroundColor" red="0.8901960784313725" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="20" y="231" width="560" height="300"/>
+                                <color key="backgroundColor" red="0.1642103401763389" green="0.095060822147651006" blue="0.17095742449664431" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="1" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="40" y="194" width="320" height="549"/>
@@ -112,11 +113,11 @@
                                 <rect key="frame" x="280" y="81" width="41" height="30"/>
                                 <state key="normal" title="Policy"/>
                                 <connections>
-                                    <action selector="localAuthTapped:" destination="IJ5-34-H0P" eventType="touchUpInside" id="RDk-4p-1E0"/>
+                                    <action selector="policyTapped:" destination="IJ5-34-H0P" eventType="touchUpInside" id="dep-lA-VMb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SW4-e0-yu2">
-                                <rect key="frame" x="240" y="131" width="119" height="30"/>
+                                <rect key="frame" x="240" y="181" width="119" height="30"/>
                                 <state key="normal" title="Reset LA Context"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="141" y="140" width="119" height="30"/>
@@ -125,29 +126,46 @@
                                     <action selector="resetLAContextTapped:" destination="IJ5-34-H0P" eventType="touchUpInside" id="4r8-nQ-kSr"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Policy" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EgW-ZI-lkU">
-                                <rect key="frame" x="358" y="82" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="09Y-Zj-X4z">
+                                <rect key="frame" x="0.0" y="551" width="600" height="0.0"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="IJ5-34-H0P" id="kvN-Sb-Vpx"/>
+                                    <outlet property="delegate" destination="IJ5-34-H0P" id="6Yj-YM-nWP"/>
+                                </connections>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Raz-7p-jNd">
+                                <rect key="frame" x="256" y="131" width="88" height="30"/>
+                                <state key="normal" title="Authenticate"/>
+                                <connections>
+                                    <action selector="authenticateTapped:" destination="IJ5-34-H0P" eventType="touchUpInside" id="kAm-vG-iiQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SW4-e0-yu2" firstAttribute="top" secondItem="EqD-Q3-qUS" secondAttribute="bottom" constant="20" id="2Ge-d9-FJF"/>
-                            <constraint firstItem="zdr-bF-zIq" firstAttribute="centerX" secondItem="fyG-Bk-t9N" secondAttribute="centerX" id="7Fj-kv-7aw"/>
+                            <constraint firstItem="SW4-e0-yu2" firstAttribute="centerX" secondItem="fyG-Bk-t9N" secondAttribute="centerX" id="22k-6C-OPp"/>
+                            <constraint firstItem="09Y-Zj-X4z" firstAttribute="width" secondItem="fyG-Bk-t9N" secondAttribute="width" id="6da-nL-aVn"/>
                             <constraint firstItem="oUH-OL-Ny4" firstAttribute="centerX" secondItem="fyG-Bk-t9N" secondAttribute="centerX" id="BZC-sV-BZX"/>
+                            <constraint firstItem="SW4-e0-yu2" firstAttribute="top" secondItem="Raz-7p-jNd" secondAttribute="bottom" constant="20" id="Bv6-Ji-oHB"/>
+                            <constraint firstItem="Raz-7p-jNd" firstAttribute="top" secondItem="EqD-Q3-qUS" secondAttribute="bottom" constant="20" id="Cb7-by-dSB"/>
+                            <constraint firstItem="EqD-Q3-qUS" firstAttribute="centerX" secondItem="fyG-Bk-t9N" secondAttribute="centerX" id="Cch-T4-5cj"/>
                             <constraint firstItem="EqD-Q3-qUS" firstAttribute="top" secondItem="oUH-OL-Ny4" secondAttribute="bottom" constant="20" id="L7a-vf-Ief"/>
                             <constraint firstItem="oUH-OL-Ny4" firstAttribute="top" secondItem="0XV-y3-HcK" secondAttribute="bottom" constant="20" id="Rdj-FC-aYh"/>
-                            <constraint firstItem="SW4-e0-yu2" firstAttribute="centerX" secondItem="oUH-OL-Ny4" secondAttribute="centerX" id="Whx-r0-aI2"/>
-                            <constraint firstItem="zdr-bF-zIq" firstAttribute="leading" secondItem="fyG-Bk-t9N" secondAttribute="leadingMargin" constant="20" id="fQv-ts-Dqr"/>
-                            <constraint firstItem="loG-Jj-9zu" firstAttribute="top" secondItem="zdr-bF-zIq" secondAttribute="bottom" constant="20" id="feY-XC-LdI"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zdr-bF-zIq" secondAttribute="trailing" constant="20" id="k66-uI-m94"/>
-                            <constraint firstItem="EqD-Q3-qUS" firstAttribute="centerX" secondItem="oUH-OL-Ny4" secondAttribute="centerX" id="n7U-aC-PvV"/>
+                            <constraint firstItem="09Y-Zj-X4z" firstAttribute="centerX" secondItem="fyG-Bk-t9N" secondAttribute="centerX" id="SKR-2C-b75"/>
+                            <constraint firstItem="loG-Jj-9zu" firstAttribute="top" secondItem="09Y-Zj-X4z" secondAttribute="bottom" id="bee-0Y-MWf"/>
+                            <constraint firstItem="loG-Jj-9zu" firstAttribute="top" secondItem="09Y-Zj-X4z" secondAttribute="top" id="eho-HN-s37"/>
+                            <constraint firstItem="zdr-bF-zIq" firstAttribute="leading" secondItem="fyG-Bk-t9N" secondAttribute="leadingMargin" id="fQv-ts-Dqr"/>
+                            <constraint firstItem="loG-Jj-9zu" firstAttribute="top" secondItem="zdr-bF-zIq" secondAttribute="bottom" priority="750" constant="20" id="feY-XC-LdI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zdr-bF-zIq" secondAttribute="trailing" id="k66-uI-m94"/>
+                            <constraint firstItem="Raz-7p-jNd" firstAttribute="centerX" secondItem="fyG-Bk-t9N" secondAttribute="centerX" id="nOD-yB-F3i"/>
+                            <constraint firstItem="09Y-Zj-X4z" firstAttribute="top" secondItem="zdr-bF-zIq" secondAttribute="bottom" constant="20" id="qQE-bD-2rq"/>
                             <constraint firstItem="zdr-bF-zIq" firstAttribute="top" secondItem="SW4-e0-yu2" secondAttribute="bottom" constant="20" id="tr3-gQ-AZE"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Local Auth" id="0lf-E7-OwE"/>
                     <connections>
+                        <outlet property="policyPicker" destination="09Y-Zj-X4z" id="cI4-4N-VIg"/>
+                        <outlet property="policyPickerTopConstraint" destination="eho-HN-s37" id="fJY-R5-fYT"/>
                         <outlet property="textView" destination="zdr-bF-zIq" id="imi-zt-KQW"/>
                     </connections>
                 </viewController>
