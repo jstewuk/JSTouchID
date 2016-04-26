@@ -141,7 +141,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.97932396532438293" green="0.9603170441834451" blue="0.86829732941834437" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="SW4-e0-yu2" firstAttribute="centerX" secondItem="fyG-Bk-t9N" secondAttribute="centerX" id="22k-6C-OPp"/>
                             <constraint firstItem="09Y-Zj-X4z" firstAttribute="width" secondItem="fyG-Bk-t9N" secondAttribute="width" id="6da-nL-aVn"/>
@@ -164,6 +164,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Local Auth" id="0lf-E7-OwE"/>
                     <connections>
+                        <outlet property="policyButton" destination="EqD-Q3-qUS" id="wGJ-RE-Rfn"/>
                         <outlet property="policyPicker" destination="09Y-Zj-X4z" id="cI4-4N-VIg"/>
                         <outlet property="policyPickerTopConstraint" destination="eho-HN-s37" id="fJY-R5-fYT"/>
                         <outlet property="textView" destination="zdr-bF-zIq" id="imi-zt-KQW"/>

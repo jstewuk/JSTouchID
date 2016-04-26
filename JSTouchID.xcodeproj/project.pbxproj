@@ -13,6 +13,9 @@
 		387697911CC82F910028D10B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 387697901CC82F910028D10B /* Assets.xcassets */; };
 		387697941CC82F910028D10B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 387697921CC82F910028D10B /* LaunchScreen.storyboard */; };
 		3876979C1CC83D3C0028D10B /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876979B1CC83D3C0028D10B /* KeychainWrapper.swift */; };
+		3876979F1CCE6CBD0028D10B /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876979E1CCE6CBD0028D10B /* UITextView+.swift */; };
+		387697A11CCE6E240028D10B /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387697A01CCE6E240028D10B /* UIView+.swift */; };
+		387697A31CCE6EBB0028D10B /* KeychainWrapper+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387697A21CCE6EBB0028D10B /* KeychainWrapper+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		387697931CC82F910028D10B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		387697951CC82F910028D10B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3876979B1CC83D3C0028D10B /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		3876979E1CCE6CBD0028D10B /* UITextView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
+		387697A01CCE6E240028D10B /* UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		387697A21CCE6EBB0028D10B /* KeychainWrapper+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeychainWrapper+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,14 +63,25 @@
 			isa = PBXGroup;
 			children = (
 				387697891CC82F910028D10B /* AppDelegate.swift */,
+				3876978D1CC82F910028D10B /* Main.storyboard */,
 				3876978B1CC82F910028D10B /* LocalAuthViewController.swift */,
 				3876979B1CC83D3C0028D10B /* KeychainWrapper.swift */,
-				3876978D1CC82F910028D10B /* Main.storyboard */,
+				3876979D1CCE6C620028D10B /* Extensions */,
 				387697901CC82F910028D10B /* Assets.xcassets */,
 				387697921CC82F910028D10B /* LaunchScreen.storyboard */,
 				387697951CC82F910028D10B /* Info.plist */,
 			);
 			path = JSTouchID;
+			sourceTree = "<group>";
+		};
+		3876979D1CCE6C620028D10B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3876979E1CCE6CBD0028D10B /* UITextView+.swift */,
+				387697A01CCE6E240028D10B /* UIView+.swift */,
+				387697A21CCE6EBB0028D10B /* KeychainWrapper+.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,6 +116,7 @@
 				TargetAttributes = {
 					387697851CC82F910028D10B = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 64MGS82ZT3;
 					};
 				};
 			};
@@ -139,8 +157,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3876979C1CC83D3C0028D10B /* KeychainWrapper.swift in Sources */,
+				387697A31CCE6EBB0028D10B /* KeychainWrapper+.swift in Sources */,
+				3876979F1CCE6CBD0028D10B /* UITextView+.swift in Sources */,
 				3876978C1CC82F910028D10B /* LocalAuthViewController.swift in Sources */,
 				3876978A1CC82F910028D10B /* AppDelegate.swift in Sources */,
+				387697A11CCE6E240028D10B /* UIView+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,9 +276,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = JSTouchID/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = stewartstuff.com.JSTouchID;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mutualmobile.touchIDTester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -266,9 +289,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = JSTouchID/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = stewartstuff.com.JSTouchID;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mutualmobile.touchIDTester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -292,6 +317,7 @@
 				3876979A1CC82F910028D10B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -10,58 +10,41 @@ import UIKit
 import LocalAuthentication
 
 class LocalAuthViewController: UIViewController {
-    
-    // Keychain
-    let key = "MyKey"
-    let keychain = KeychainWrapper.standardKeychainAccess()
-    
-    // Local Authentication
+
     var laContext: LAContext?
     var policy: LAPolicy? = LAPolicy.DeviceOwnerAuthenticationWithBiometrics
-    let policies = [
-        "DeviceOwnerAuthentication",
-        "DeviceOwnerAuthenticationWithBiometrics"
-    ]
+    lazy var policies: [(policy: LAPolicy, name: String)] = self.laPolicies()
     
     @IBOutlet weak var textView: UITextView!
-    
     @IBOutlet weak var policyPicker: UIPickerView!
-    
     @IBOutlet weak var policyPickerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var policyButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTextView()
+        textView.configure()
         configureLAContext()
         touchIDAvailable()
-    }
-}
-
-//MARK: - LAContext -
-extension LocalAuthViewController {
-    private func configureLAContext() {
-        laContext = LAContext()
-        laContext?.localizedFallbackTitle = "Fallback Title"
+        configurePolicyButton()
     }
     
-    private func setLaPolicy(index: Int) {
-        switch index {
-        case 0:
-            policy = LAPolicy.DeviceOwnerAuthentication
-        case 1:
-            policy = LAPolicy.DeviceOwnerAuthenticationWithBiometrics
-        default:
-            policy = nil
-            log("Policy index: \(index) out of range")
-        }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        logPolicy()
     }
     
-    func touchIDAvailable() {
-        let policy = LAPolicy.DeviceOwnerAuthenticationWithBiometrics
-        if ((laContext!.canEvaluatePolicy(policy, error: nil)) ) {
-            log( "Touch ID available")
-        } else {
-            log( "No Touch ID for you")
+    func logPolicy() {
+        log("Policy: \(titleOfPolicy(policy!)!)")
+    }
+    
+    func log(string: String) {
+        textView.log(string)
+    }
+    
+    func configurePolicyButton() {
+        policyButton.enabled = policies.count > 1
+        if !policyButton.enabled {
+            policyPicker.hidden = true
         }
     }
 }
@@ -83,21 +66,82 @@ extension LocalAuthViewController {
     }
     
     @IBAction func policyTapped(sender: UIButton) {
-        log("Policy tapped")
-        showPolicyPicker()
+        if isPickerDisplayed() {
+            hidePolicyPicker()
+        } else {
+            showPolicyPicker()
+        }
     }
-
+    
     @IBAction func resetLAContextTapped(sender: UIButton) {
+        resetLAContext()
+    }
+    
+}
+
+//MARK: - LAContext -
+extension LocalAuthViewController {
+    
+    private func laPolicies() -> [(policy: LAPolicy, name: String)] {
+        if #available(iOS 9, *) {
+            return [
+                (LAPolicy.DeviceOwnerAuthenticationWithBiometrics, "DeviceOwnerAuthenticationWithBiometrics"),
+                (LAPolicy.DeviceOwnerAuthentication, "DeviceOwnerAuthentication")
+            ]
+        } else  {
+            return [
+                (LAPolicy.DeviceOwnerAuthenticationWithBiometrics, "DeviceOwnerAuthenticationWithBiometrics"),
+            ]
+        }
+    }
+    
+    private func configureLAContext() {
+        laContext = LAContext()
+        laContext?.localizedFallbackTitle = "Fallback Title"
+    }
+    
+    private func resetLAContext() {
         log("Reset Local Auth Context Tapped")
-        laContext?.invalidate()
+        if #available(iOS 9.0, *) {
+            laContext?.invalidate()
+        } else {
+            laContext = nil
+        }
         configureLAContext()
     }
     
+    private func setLAPolicy(index: Int) {
+        guard index < policies.count else { log("Policy index \(index) out of range"); return }
+        policy = policies[index].policy
+        logPolicy()
+    }
+    
+    func touchIDAvailable() {
+        let policy = LAPolicy.DeviceOwnerAuthenticationWithBiometrics
+        if ((laContext!.canEvaluatePolicy(policy, error: nil)) ) {
+            log( "Touch ID available")
+        } else {
+            log( "No Touch ID for you")
+        }
+    }
+    
+    func policy(title: String) -> LAPolicy? {
+        guard let index = policies.indexOf({title == $0.name }) else { return nil }
+        return policies[index].0
+    }
+    
+    func titleOfPolicy(policy: LAPolicy) -> String? {
+        guard let index = policies.indexOf({policy == $0.policy }) else { return nil }
+        return policies[index].1
+    }
 }
 
 //MARK:- Picker -
 extension LocalAuthViewController {
     private func showPolicyPicker() {
+        let row = policies.indexOf{ $0.policy == policy }
+        policyPicker.selectRow(row!, inComponent: 0, animated: false)
+        
         policyPickerTopConstraint.constant = policyPicker.intrinsicContentSize().height
         UIView.animateConstraint(view)
     }
@@ -106,18 +150,22 @@ extension LocalAuthViewController {
         policyPickerTopConstraint.constant = 0
         UIView.animateConstraint(view)
     }
+    
+    func isPickerDisplayed() -> Bool {
+        return policyPickerTopConstraint.constant != 0
+    }
+
 }
 
 
 extension LocalAuthViewController: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        log("Policy: \(policies[row])")
-        setLaPolicy(row)
+        setLAPolicy(row)
         hidePolicyPicker()
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return policies[row]
+        return policies[row].name
     }
 }
 
@@ -130,50 +178,3 @@ extension LocalAuthViewController: UIPickerViewDataSource {
         return policies.count
     }
 }
-
-//MARK: - Keychain stuff -
-extension LocalAuthViewController {
-    
-    func storeSecret() {
-        let saveSuccessful: Bool = keychain.setString("Some String", forKey: key)
-        print("Saved successfully: \(saveSuccessful)")
-    }
-    
-    func retrieveSecret() {
-        let retrievedString = keychain.stringForKey(key)
-        print("Retrieved string: \(retrievedString)")
-    }
-}
-
-//MARK: - Logging TextView -
-extension LocalAuthViewController {
-    
-    private func configureTextView() {
-        textView.editable = false
-        textView.layer.borderColor = UIColor.blueColor().CGColor
-        textView.layer.borderWidth = 2.0
-    }
-    
-    
-    private func log(string: String) {
-        let text = textView.text ?? ""
-        textView.text = text + "\n" + string + "\n"
-        guard let viewText = textView.text else {return}
-        let range = NSMakeRange((viewText as NSString).length - 1, 1)
-        textView.scrollRangeToVisible(range)
-    }
-}
-
-private extension UIView {
-    class func animateConstraint(view: UIView) {
-        self.animateWithDuration(
-            0.25, delay: 0.0,
-            options: .CurveEaseInOut,
-            animations: {
-                view.layoutIfNeeded()
-            },
-            completion: nil)
-    }
-}
-
-
