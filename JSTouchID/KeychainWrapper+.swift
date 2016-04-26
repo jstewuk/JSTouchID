@@ -17,13 +17,11 @@ import Foundation
 
 extension KeychainWrapper {
     
-    func storeSecret(key: String, secret: String) {
-        let saveSuccessful: Bool = self.setString("Some String", forKey: key)
-        print("Saved successfully: \(saveSuccessful)")
+    func storeSecret(key: String, secret: String) -> Bool {
+        return self.setString("Some String", forKey: key)
     }
     
-    func retrieveSecret(key: String) {
-        let retrievedString = self.stringForKey(key)
-        print("Retrieved string: \(retrievedString)")
+    func retrieveSecret(key: String) -> String? {
+        return self.stringForKey(key)
     }
 }

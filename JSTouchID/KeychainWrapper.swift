@@ -18,6 +18,7 @@ private let SecAttrService: String! = kSecAttrService as String
 private let SecAttrGeneric: String! = kSecAttrGeneric as String
 private let SecAttrAccount: String! = kSecAttrAccount as String
 private let SecAttrAccessGroup: String! = kSecAttrAccessGroup as String
+private let SecAccessControl: String! = kSecAttrAccessControl as String
 
 private let sharedKeychainWrapper = KeychainWrapper()
 
@@ -134,6 +135,8 @@ public class KeychainWrapper {
         // Specify we want NSData/CFData returned
         keychainQueryDictionary[SecReturnData] = kCFBooleanTrue
         
+        keychainQueryDictionary[kSecUseOperationPrompt as String] = "My Prompt"
+        
         // Search
         let status = withUnsafeMutablePointer(&result) {
             SecItemCopyMatching(keychainQueryDictionary, UnsafeMutablePointer($0))
@@ -218,7 +221,7 @@ public class KeychainWrapper {
         keychainQueryDictionary[SecValueData] = value
         
         // Protect the keychain entry so it's only valid when the device is unlocked
-        keychainQueryDictionary[SecAttrAccessible] = kSecAttrAccessibleWhenUnlocked
+//        keychainQueryDictionary[SecAttrAccessible] = kSecAttrAccessibleWhenUnlocked
         
         let status: OSStatus = SecItemAdd(keychainQueryDictionary, nil)
         
@@ -338,7 +341,19 @@ public class KeychainWrapper {
         
         keychainQueryDictionary[SecAttrAccount] = encodedIdentifier
         
+        if #available(iOS 9.0, *) {
+            if let access = accessControl() {
+                keychainQueryDictionary[SecAccessControl] = access
+            }
+        }
+        
         return keychainQueryDictionary
+    }
+    
+    @available(iOS 9.0, *)
+    private func accessControl() -> SecAccessControl?   {
+        var aclError: Unmanaged<CFErrorRef>?
+        return SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, SecAccessControlCreateFlags.UserPresence, &aclError)
     }
 }
 

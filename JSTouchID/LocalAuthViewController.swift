@@ -28,8 +28,19 @@ class LocalAuthViewController: UIViewController {
         configurePolicyButton()
     }
     
+    func testKeychain() {
+        let key = "MyKey"
+        let keychain = KeychainWrapper.standardKeychainAccess()
+        let stored = keychain.storeSecret(key, secret: "MY_SECRET")
+        log("Secret stored \(stored ? "successfully" : "unsuccessfully").")
+        let secret = keychain.retrieveSecret(key)
+        log("Secret: \(secret) retrieved.")
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+//        testKeychain()
+
         logPolicy()
     }
     
@@ -122,7 +133,13 @@ extension LocalAuthViewController {
             log( "Touch ID available")
         } else {
             log( "No Touch ID for you")
+            openTouchIDSettings()
         }
+    }
+    
+    func openTouchIDSettings() {
+        let url = NSURL(string: UIApplicationOpenSettingsURLString)
+        UIApplication.sharedApplication().openURL(url!)
     }
     
     func policy(title: String) -> LAPolicy? {

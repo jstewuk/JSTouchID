@@ -43,6 +43,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		383835CF1CCEFEB900540CD0 /* Dependency */ = {
+			isa = PBXGroup;
+			children = (
+				3876979B1CC83D3C0028D10B /* KeychainWrapper.swift */,
+			);
+			name = Dependency;
+			sourceTree = "<group>";
+		};
+		383835D01CCEFEDF00540CD0 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				387697921CC82F910028D10B /* LaunchScreen.storyboard */,
+				387697901CC82F910028D10B /* Assets.xcassets */,
+				387697951CC82F910028D10B /* Info.plist */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
 		3876977D1CC82F910028D10B = {
 			isa = PBXGroup;
 			children = (
@@ -65,11 +83,9 @@
 				387697891CC82F910028D10B /* AppDelegate.swift */,
 				3876978D1CC82F910028D10B /* Main.storyboard */,
 				3876978B1CC82F910028D10B /* LocalAuthViewController.swift */,
-				3876979B1CC83D3C0028D10B /* KeychainWrapper.swift */,
 				3876979D1CCE6C620028D10B /* Extensions */,
-				387697901CC82F910028D10B /* Assets.xcassets */,
-				387697921CC82F910028D10B /* LaunchScreen.storyboard */,
-				387697951CC82F910028D10B /* Info.plist */,
+				383835D01CCEFEDF00540CD0 /* Support */,
+				383835CF1CCEFEB900540CD0 /* Dependency */,
 			);
 			path = JSTouchID;
 			sourceTree = "<group>";
